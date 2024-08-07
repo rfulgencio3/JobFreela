@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.Core", "src\JobFr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.Infra", "src\JobFreela.Infra\JobFreela.Infra.csproj", "{89A033B2-FB19-4EB5-BF2E-51E543FCA217}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.Application", "src\JobFreela.Application\JobFreela.Application.csproj", "{F8F88E15-225B-402A-A558-ED2E34B002B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{89A033B2-FB19-4EB5-BF2E-51E543FCA217}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89A033B2-FB19-4EB5-BF2E-51E543FCA217}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89A033B2-FB19-4EB5-BF2E-51E543FCA217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{5C12C258-AFFE-47AA-9D23-5A7BFBC9650F} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
 		{5BD2DA3E-2E42-4048-BD09-3C5B1FE8D676} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
 		{89A033B2-FB19-4EB5-BF2E-51E543FCA217} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
+		{F8F88E15-225B-402A-A558-ED2E34B002B5} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {049028A9-C1E6-4184-BDE8-043663506E07}

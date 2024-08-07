@@ -24,4 +24,12 @@ public class Project : BaseEntity
     public DateTime? FinishedAt { get; private set; }
     public ProjectStatus Status { get; private set; }
     public List<ProjectComment> Comments { get; private set; }
+
+    public void Cancel()
+    {
+        if (Status == ProjectStatus.Created || Status == ProjectStatus.InProgress)
+        {
+            Status = ProjectStatus.Cancelled;
+        }
+    }
 }
