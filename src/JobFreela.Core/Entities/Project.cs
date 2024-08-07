@@ -28,8 +28,31 @@ public class Project : BaseEntity
     public void Cancel()
     {
         if (Status == ProjectStatus.Created || Status == ProjectStatus.InProgress)
-        {
+        {W
             Status = ProjectStatus.Cancelled;
         }
+    }
+    public void Start()
+    {
+        if (Status == ProjectStatus.Created)
+        {
+            Status = ProjectStatus.InProgress;
+            StartedAt = DateTime.UtcNow;
+        }
+    }
+    public void Finish()
+    {
+        if (Status == ProjectStatus.InProgress)
+        {
+            Status = ProjectStatus.Finished;
+            FinishedAt = DateTime.UtcNow;
+        }
+    }
+
+    public void Update(string title, string description, decimal totalCost)
+    {
+        Title = title;
+        Description = description;
+        TotalCost = totalCost;
     }
 }
