@@ -60,7 +60,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost("{id}/comments")]
-    public IActionResult PostComment(int id, [FromBody] CreateCommentInputModel inputModel)
+    public IActionResult PostComment([FromBody] CreateCommentInputModel inputModel)
     {
         _service.CreateComment(inputModel);
         return NoContent();
