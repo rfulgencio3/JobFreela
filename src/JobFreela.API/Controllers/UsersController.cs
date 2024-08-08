@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using JobFreela.Application.InputModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JobFreela.API.Controllers;
 
