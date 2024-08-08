@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using JobFreela.Application.InputModels;
+using JobFreela.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JobFreela.API.Controllers;
 
@@ -6,6 +8,11 @@ namespace JobFreela.API.Controllers;
 [ApiController]
 public class ProjectsController : ControllerBase
 {
+    private readonly IProjectService _service;
+    public ProjectsController(IProjectService service)
+    {
+        _service = service;
+    }
     [HttpGet]
     public IActionResult Get(string query)
     {
@@ -15,52 +22,61 @@ public class ProjectsController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-        return Ok();
+        var project = _service.GetById(id);
+        if (project is null || Empty.Equals(project.Id)) { return NotFound(); }
+
+        return Ok(project);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] CreateProjectModel createProject)
+    public IActionResult Post([FromBody] CreateProjectInputModel inputModel)
     {
-        if (createProject.Title.Lengh > 50)
+        if (inputModel.Title.Length > 50)
         {
             return BadRequest();
         }
 
-        return CreatedAtAction(nameof(GetById), new { id = createProject.Id}, createProject);
+        var id = _service.Create(inputModel);
+        return CreatedAtAction(nameof(GetById), new { id = id}, inputModel);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] UpdateProjectModel updateProject)
+    public IActionResult Put(int id, [FromBody] UpdateProjectInputModel inputModel)
     {
-        if (updateProject.Description.Lengh > 200)
+        if (inputModel.Description.Length > 200)
         {
             return BadRequest();
         }
 
+        _service.Update(inputModel);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
+        _service.Delete(id);
         return NoContent();
     }
 
     [HttpPost("{id}/comments")]
-    public IActionResult PostComment(int id, [FromBody] CreateCommentModel createComment)
+    public IActionResult PostComment(int id, [FromBody] CreateCommentInputModel inputModel)
     {
+        _service.CreateComment(inputModel);
         return NoContent();
     }
 
     [HttpPut("{id}/start")]
     public IActionResult Start(int id)
     {
+        _service.Start(id);
         return NoContent();
     }
 
     [HttpPut("{id}/finish")]
     public IActionResult Finish(int id)
     {
+        _service.Finish(id);
         return NoContent();
     }
 }

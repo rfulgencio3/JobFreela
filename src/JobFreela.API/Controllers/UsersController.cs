@@ -5,6 +5,10 @@ namespace JobFreela.API.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
+    public UsersController()
+    {
+        
+    }
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -12,13 +16,13 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] CreateUserModel createUser)
+    public IActionResult Post([FromBody] CreateUserInputModel createUser)
     {
         return CreatedAtAction(nameof(GetById), new {id = createUser.Id}, createUser);
     }
 
     [HttpPut("{id}/login")]
-    public IActionResult Login(int id, [FromBody] LoginModel login)
+    public IActionResult Login(int id, [FromBody] LoginInputModel login)
     {
         return NoContent();
     }

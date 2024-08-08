@@ -49,7 +49,7 @@ public class ProjectService : IProjectService
     {
         var projects = _context.Projects;
         var projectsViewModel = projects
-            .Select(p => new ProjectViewModel(p.Title, p.Description, p.CreatedAt))
+            .Select(p => new ProjectViewModel(p.Id, p.Title, p.Description, p.CreatedAt))
             .ToList();
 
         return projectsViewModel;
