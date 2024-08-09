@@ -4,6 +4,7 @@ using JobFreela.Application.Services.Interfaces;
 using JobFreela.Core.Repositories;
 using JobFreela.Infra.Persistence;
 using JobFreela.Infra.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,10 +16,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
-builder.Services.AddSingleton<JobFreelaDbContext, JobFreelaDbContext>();
-
 // Services
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
@@ -26,6 +23,12 @@ builder.Services.AddScoped<ISkillService, SkillService>();
 // Repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+
+builder.Services.AddDbContext<JobFreelaDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
