@@ -25,7 +25,8 @@ builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 
 builder.Services.AddDbContext<JobFreelaDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
+    options.UseInMemoryDatabase("JobFreelaCs"));
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
 
 
 var app = builder.Build();
