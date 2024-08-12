@@ -3,8 +3,6 @@ using JobFreela.Application.Commands.CreateComment;
 using JobFreela.Application.Commands.CreateProject;
 using JobFreela.Application.Commands.CreateSkill;
 using JobFreela.Application.Commands.CreateUser;
-using JobFreela.Application.Services.Implementations;
-using JobFreela.Application.Services.Interfaces;
 using JobFreela.Core.Repositories;
 using JobFreela.Infra.Persistence;
 using JobFreela.Infra.Persistence.Repositories;
@@ -19,10 +17,6 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// Services
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<ISkillService, SkillService>();
 
 // Repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();

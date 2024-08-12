@@ -1,4 +1,5 @@
 ﻿using JobFreela.Application.Commands.CreateUser;
+using JobFreela.Application.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,15 +14,18 @@ public class UsersController : ControllerBase
         _mediator = mediator;
     }
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-        return Ok();
+        var query = new GetUserByIdQuery(id);
+        var user = await _mediator.Send(query);
+        
+        return Ok(user);
     }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
     {
-        var id = await _mediator.Send(command);
+        await _mediator.Send(command);
         return Created();
     }
 }

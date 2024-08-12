@@ -1,8 +1,10 @@
 ﻿using JobFreela.Application.Commands.CreateComment;
 using JobFreela.Application.Commands.CreateProject;
 using JobFreela.Application.Commands.DeleteProject;
+using JobFreela.Application.Commands.FinishProject;
+using JobFreela.Application.Commands.StartProject;
 using JobFreela.Application.Commands.UpdateProject;
-using JobFreela.Application.Services.Interfaces;
+using JobFreela.Application.Queries.GetProjectById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +14,9 @@ namespace JobFreela.API.Controllers;
 [ApiController]
 public class ProjectsController : ControllerBase
 {
-    private readonly IProjectService _service;
     private readonly IMediator _mediator;
-    public ProjectsController(IProjectService service, IMediator mediator)
+    public ProjectsController(IMediator mediator)
     {
-        _service = service;
         _mediator = mediator;
     }
     [HttpGet]
@@ -26,9 +26,11 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-        var project = _service.GetById(id);
+        var query = new GetProjectByIdQuery(id);
+        var project = await _mediator.Send(query);
+
         if (project is null || Empty.Equals(project.Id)) { return NotFound(); }
 
         return Ok(project);
@@ -75,16 +77,20 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/start")]
-    public IActionResult Start(int id)
+    public async Task<IActionResult> Start(int id)
     {
-        _service.Start(id);
+        var command = new StartProjectCommand(id);
+        await _mediator.Send(command);
+
         return NoContent();
     }
 
     [HttpPut("{id}/finish")]
-    public IActionResult Finish(int id)
+    public async Task<IActionResult> Finish(int id)
     {
-        _service.Finish(id);
+        var command = new FinishProjectCommand(id);
+        await _mediator.Send(command);
+
         return NoContent();
     }
 }

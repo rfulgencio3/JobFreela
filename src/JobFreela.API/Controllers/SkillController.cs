@@ -1,5 +1,6 @@
 ﻿using JobFreela.Application.Commands.CreateSkill;
-using JobFreela.Application.Services.Interfaces;
+using JobFreela.Application.Queries.GetAllSkills;
+using JobFreela.Application.Queries.GetSkillById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,18 +10,17 @@ namespace JobFreela.API.Controllers;
 [ApiController]
 public class SkillController : ControllerBase
 {
-    private readonly ISkillService _service;
     private readonly IMediator _mediator;
-    public SkillController(ISkillService service, IMediator mediator)
+    public SkillController(IMediator mediator)
     {
-        _service = service;
         _mediator = mediator;
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var skills = _service.GetAll();
+        var skills = await _mediator.Send(new GetAllSkillsQuery());
+
         if (skills is null) { NotFound(); }
 
         return Ok(skills);
@@ -29,7 +29,9 @@ public class SkillController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-        var skill = _service.GetById(id);
+        var query = new GetSkillByIdQuery(id);
+        var skill = _mediator.Send(query);
+
         if (skill is null) { NotFound(); }
 
         return Ok(skill);
