@@ -3,6 +3,7 @@ using JobFreela.Application.Services.Interfaces;
 using JobFreela.Application.ViewModels;
 using JobFreela.Core.Entities;
 using JobFreela.Infra.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace JobFreela.Application.Services.Implementations;
@@ -62,14 +63,22 @@ public class ProjectService : IProjectService
 
     public ProjectDetailsViewModel GetById(int id)
     {
-        var project = _context.Projects.SingleOrDefault(p => p.Id == id);
+        var project = _context.Projects
+            .Include(p => p.Client)
+            .Include(p => p.Freelancer)
+            .SingleOrDefault(p => p.Id == id);
+
+        if (project is null) return null;
+
         var projectDetailsViewModel = new ProjectDetailsViewModel(
             project.Id,
             project.Title,
             project.Description,
             project.TotalCost,
             project.StartedAt,
-            project.FinishedAt);
+            project.FinishedAt,
+            project.Client.FullName,
+            project.Freelancer.FullName);
 
         return projectDetailsViewModel; 
     }
