@@ -1,4 +1,8 @@
 using AspNetCore.Scalar;
+using JobFreela.Application.Commands.CreateComment;
+using JobFreela.Application.Commands.CreateProject;
+using JobFreela.Application.Commands.CreateSkill;
+using JobFreela.Application.Commands.CreateUser;
 using JobFreela.Application.Services.Implementations;
 using JobFreela.Application.Services.Interfaces;
 using JobFreela.Core.Repositories;
@@ -26,8 +30,13 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 
 builder.Services.AddDbContext<JobFreelaDbContext>(options =>
     options.UseInMemoryDatabase("JobFreelaCs"));
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
+//options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
 
+// Mediator
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateCommentCommand).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateSkillCommand).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateUserCommand).Assembly));
 
 var app = builder.Build();
 

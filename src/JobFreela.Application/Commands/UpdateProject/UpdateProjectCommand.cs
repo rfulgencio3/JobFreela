@@ -1,6 +1,8 @@
-﻿namespace JobFreela.Application.InputModels;
+﻿using MediatR;
 
-public class UpdateProjectInputModel
+namespace JobFreela.Application.Commands.UpdateProject;
+
+public class UpdateProjectCommand : IRequest
 {
     public int Id { get; set; }
     public string Title { get; set; }

@@ -1,7 +1,5 @@
-﻿using JobFreela.Application.InputModels;
-using JobFreela.Application.Services.Interfaces;
+﻿using JobFreela.Application.Services.Interfaces;
 using JobFreela.Application.ViewModels;
-using JobFreela.Core.Entities;
 using JobFreela.Infra.Persistence;
 
 namespace JobFreela.Application.Services.Implementations;
@@ -12,14 +10,6 @@ public class UserService : IUserService
     public UserService(JobFreelaDbContext context)
     {
         _context = context;
-    }
-    public int Create(CreateUserInputModel inputModel)
-    {
-        var user = new User(inputModel.FullName, inputModel.Email, inputModel.BirthDate);
-
-        _context.Users.Add(user);
-        _context.SaveChanges();
-        return user.Id;
     }
 
     public UserViewModel GetUser(int id)

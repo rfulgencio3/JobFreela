@@ -1,5 +1,6 @@
-﻿using JobFreela.Application.InputModels;
+﻿using JobFreela.Application.Commands.CreateSkill;
 using JobFreela.Application.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobFreela.API.Controllers;
@@ -9,9 +10,11 @@ namespace JobFreela.API.Controllers;
 public class SkillController : ControllerBase
 {
     private readonly ISkillService _service;
-    public SkillController(ISkillService service)
+    private readonly IMediator _mediator;
+    public SkillController(ISkillService service, IMediator mediator)
     {
         _service = service;
+        _mediator = mediator;
     }
 
     [HttpGet]
@@ -33,13 +36,14 @@ public class SkillController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] CreateSkillInputModel createSkill)
+    public async Task<IActionResult> Post([FromBody] CreateSkillCommand command)
     {
-        if (createSkill.Description.Length > 50)
+        if (command.Description.Length > 50)
         {
             return BadRequest();
         }
 
-        return CreatedAtAction(nameof(GetById), new { id = createSkill.Id }, createSkill);
+        var id = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { id = id }, command);
     }
 }

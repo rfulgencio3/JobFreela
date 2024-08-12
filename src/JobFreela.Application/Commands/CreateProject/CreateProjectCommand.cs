@@ -1,8 +1,9 @@
-﻿namespace JobFreela.Application.InputModels;
+﻿using MediatR;
 
-public class CreateProjectInputModel
+namespace JobFreela.Application.Commands.CreateProject;
+
+public class CreateProjectCommand : IRequest<int>
 {
-    public int Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public int IdClient { get; set; }

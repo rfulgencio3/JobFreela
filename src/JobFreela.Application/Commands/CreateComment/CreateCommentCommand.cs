@@ -1,6 +1,8 @@
-﻿namespace JobFreela.Application.InputModels;
+﻿using MediatR;
 
-public class CreateCommentInputModel
+namespace JobFreela.Application.Commands.CreateComment;
+
+public class CreateCommentCommand : IRequest
 {
     public string Content { get; set; }
     public int IdProject { get; set; }

@@ -1,4 +1,5 @@
-﻿using JobFreela.Application.InputModels;
+﻿using JobFreela.Application.Commands.CreateUser;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobFreela.API.Controllers;
@@ -6,9 +7,10 @@ namespace JobFreela.API.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    public UsersController()
+    private readonly IMediator _mediator;
+    public UsersController(IMediator mediator)
     {
-        
+        _mediator = mediator;
     }
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
@@ -17,14 +19,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] CreateUserInputModel createUser)
+    public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
     {
-        return CreatedAtAction(nameof(GetById), new {id = createUser.Id}, createUser);
-    }
-
-    [HttpPut("{id}/login")]
-    public IActionResult Login(int id, [FromBody] LoginInputModel login)
-    {
-        return NoContent();
+        var id = await _mediator.Send(command);
+        return Created();
     }
 }
