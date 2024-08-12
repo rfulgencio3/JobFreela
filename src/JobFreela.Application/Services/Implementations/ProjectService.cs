@@ -25,6 +25,8 @@ public class ProjectService : IProjectService
             );
 
         _context.Projects.Add(project);
+        _context.SaveChanges();
+
         return project.Id;
     }
 
@@ -36,13 +38,16 @@ public class ProjectService : IProjectService
             inputModel.IdUser);
 
         _context.ProjectComments.Add(comment);
+        _context.SaveChanges();
     }
 
     public void Delete(int id)
     {
         var project = _context.Projects.SingleOrDefault(p => p.Id == id);
 
-        project.Cancel(); 
+        project.Cancel();
+
+        _context.SaveChanges();
     }
 
     public List<ProjectViewModel> GetAll(string query)
@@ -74,6 +79,8 @@ public class ProjectService : IProjectService
         var project = _context.Projects.SingleOrDefault(p => p.Id == id);
 
         project.Start();
+
+        _context.SaveChanges();
     }
 
     public void Finish(int id)
@@ -81,6 +88,8 @@ public class ProjectService : IProjectService
         var project = _context.Projects.SingleOrDefault(p => p.Id == id);
 
         project.Finish();
+
+        _context.SaveChanges();
     }
 
     public void Update(UpdateProjectInputModel inputModel)
@@ -88,5 +97,7 @@ public class ProjectService : IProjectService
         var project = _context.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
 
         project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
+
+        _context.SaveChanges();
     }
 }
