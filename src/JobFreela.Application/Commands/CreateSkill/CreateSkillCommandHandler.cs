@@ -1,15 +1,15 @@
 ﻿using JobFreela.Core.Entities;
-using JobFreela.Infra.Persistence;
+using JobFreela.Infra.Persistence.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.CreateSkill;
 
 public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand, int>
 {
-    private readonly JobFreelaDbContext _context;
-    public CreateSkillCommandHandler(JobFreelaDbContext context)
+    private readonly SkillRepository _repository;
+    public CreateSkillCommandHandler(SkillRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task<int> Handle(CreateSkillCommand request, CancellationToken cancellationToken)
     {
@@ -18,8 +18,7 @@ public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand, int
             request.Experience
             );
 
-        await _context.Skills.AddAsync(skill);
-        await _context.SaveChangesAsync();
+        await _repository.AddAsync(skill);
 
         return skill.Id;
     }
