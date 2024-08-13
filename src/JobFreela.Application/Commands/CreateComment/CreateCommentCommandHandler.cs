@@ -1,15 +1,15 @@
 ﻿using JobFreela.Core.Entities;
-using JobFreela.Infra.Persistence;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.CreateComment;
 
 public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand>
 {
-    private readonly JobFreelaDbContext _context;
-    public CreateCommentCommandHandler(JobFreelaDbContext context)
+    private readonly IProjectCommentRepository _repository;
+    public CreateCommentCommandHandler(IProjectCommentRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
@@ -18,7 +18,6 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand>
             request.IdProject,
             request.IdUser);
 
-        await _context.ProjectComments.AddAsync(comment);
-        await _context.SaveChangesAsync();
+        await _repository.AddAsync(comment);
     }
 }

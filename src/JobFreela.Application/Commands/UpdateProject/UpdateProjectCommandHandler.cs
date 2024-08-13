@@ -1,21 +1,22 @@
-﻿using JobFreela.Infra.Persistence;
+﻿using JobFreela.Core.Entities;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.UpdateProject;
 
 public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
 {
-    private readonly JobFreelaDbContext _context;
-    public UpdateProjectCommandHandler(JobFreelaDbContext context)
+    private readonly IProjectRepository _repository;
+    public UpdateProjectCommandHandler(IProjectRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
-        var project = _context.Projects.SingleOrDefault(p => p.Id == request.Id);
+        var project = await _repository.GetByIdAsync(request.Id);
 
         project.Update(request.Title, request.Description, request.TotalCost);
 
-        await _context.SaveChangesAsync();
+        await _repository.SaveChangesAsync();
     }
 }

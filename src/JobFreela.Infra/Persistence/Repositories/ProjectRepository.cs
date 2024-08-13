@@ -21,4 +21,20 @@ public class ProjectRepository : IProjectRepository
     {
         return await _context.Projects.SingleOrDefaultAsync(p => p.Id == id);
     }
+
+    public async Task AddAsync(Project project)
+    {
+        await _context.Projects.AddAsync(project);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Project project)
+    {
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
 }

@@ -1,20 +1,20 @@
-﻿using JobFreela.Infra.Persistence;
+﻿using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.StartProject;
 
 public class StartProjectCommandHandler : IRequestHandler<StartProjectCommand>
 {
-    private readonly JobFreelaDbContext _context;
-    public StartProjectCommandHandler(JobFreelaDbContext context)
+    private readonly IProjectRepository _repository;
+    public StartProjectCommandHandler(IProjectRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task Handle(StartProjectCommand request, CancellationToken cancellationToken)
     {
-        var project = _context.Projects.SingleOrDefault(p => p.Id == request.Id);
-
+        var project = await _repository.GetByIdAsync(request.Id);
         project.Start();
-        await _context.SaveChangesAsync();
+
+        await _repository.SaveChangesAsync();
     }
 }

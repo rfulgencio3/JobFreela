@@ -1,15 +1,15 @@
 ﻿using JobFreela.Core.Entities;
-using JobFreela.Infra.Persistence;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.CreateProject;
 
 public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, int>
 {
-    private readonly JobFreelaDbContext _context;
-    public CreateProjectCommandHandler(JobFreelaDbContext context)
+    private readonly IProjectRepository _repository;
+    public CreateProjectCommandHandler(IProjectRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
@@ -21,8 +21,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
             request.TotalCost
             );
 
-        await _context.Projects.AddAsync(project);
-        await _context.SaveChangesAsync();
+        await _repository.AddAsync(project);
 
         return project.Id;
     }

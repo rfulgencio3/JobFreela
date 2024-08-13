@@ -1,20 +1,20 @@
-﻿using JobFreela.Infra.Persistence;
+﻿using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.DeleteProject;
 
 public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
 {
-    private readonly JobFreelaDbContext _context;
-    public DeleteProjectCommandHandler(JobFreelaDbContext context)
+    private readonly IProjectRepository _repository;
+    public DeleteProjectCommandHandler(IProjectRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
-        var project = _context.Projects.SingleOrDefault(p => p.Id == request.Id);
-
+        var project = await _repository.GetByIdAsync(request.Id);
         project.Cancel();
-        await _context.SaveChangesAsync();
+
+        await _repository.SaveChangesAsync();
     }
 }

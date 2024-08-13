@@ -11,6 +11,13 @@ public class SkillRepository : ISkillRepository
     {
         _context = context;
     }
+
+    public async Task AddAsync(Skill skill)
+    {
+        await _context.Skills.AddAsync(skill);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<List<Skill>> GetAllAsync()
     {
         return await _context.Skills.ToListAsync();
