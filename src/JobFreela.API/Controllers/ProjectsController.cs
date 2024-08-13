@@ -63,16 +63,6 @@ public class ProjectsController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] UpdateProjectCommand command)
     {
-        if (!ModelState.IsValid)
-        {
-            var messages = ModelState
-                .SelectMany(m => m.Value.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToList();
-
-            return BadRequest(messages);
-        }
-
         _mediator.Send(command);
         return NoContent();
     }
@@ -89,16 +79,6 @@ public class ProjectsController : ControllerBase
     [HttpPost("{id}/comments")]
     public async Task<IActionResult> PostComment([FromBody] CreateCommentCommand command)
     {
-        if (!ModelState.IsValid)
-        {
-            var messages = ModelState
-                .SelectMany(m => m.Value.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToList();
-
-            return BadRequest(messages);
-        }
-
         await _mediator.Send(command);
         return NoContent();
     }
