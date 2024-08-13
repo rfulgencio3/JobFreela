@@ -4,7 +4,9 @@ using JobFreela.Application.Commands.DeleteProject;
 using JobFreela.Application.Commands.FinishProject;
 using JobFreela.Application.Commands.StartProject;
 using JobFreela.Application.Commands.UpdateProject;
+using JobFreela.Application.Queries.GetAllProjects;
 using JobFreela.Application.Queries.GetProjectById;
+using JobFreela.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +22,14 @@ public class ProjectsController : ControllerBase
         _mediator = mediator;
     }
     [HttpGet]
-    public IActionResult Get(string query)
+    public async Task<IActionResult> Get(string query)
     {
-        return Ok();
+        var getAll = new GetAllProjectsQuery(query);
+        var projects = await _mediator.Send(getAll);
+        
+        if (projects is null) { return NotFound(); }
+        
+        return Ok(projects);
     }
 
     [HttpGet("{id}")]
