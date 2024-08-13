@@ -4,6 +4,8 @@ using JobFreela.API.Filters;
 using JobFreela.Application.Commands.CreateProject;
 using JobFreela.Application.Validators;
 using JobFreela.Core.Repositories;
+using JobFreela.Core.Services;
+using JobFreela.Infra.Auth;
 using JobFreela.Infra.Persistence;
 using JobFreela.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -24,13 +26,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<JobFreelaDbContext>(options =>
     options.UseInMemoryDatabase("JobFreelaCs"));
-//options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
 
 // Repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IProjectCommentRepository, ProjectCommentRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Mediator
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
