@@ -1,7 +1,10 @@
 ﻿using JobFreela.Application.Commands.CreateUser;
+using JobFreela.Application.Commands.LoginUser;
 using JobFreela.Application.Queries.GetUserById;
+using JobFreela.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace JobFreela.API.Controllers;
 
@@ -28,5 +31,14 @@ public class UsersController : ControllerBase
     {
         await _mediator.Send(command);
         return Created();
+    }
+
+    [HttpPut("login")]
+    public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
+    {
+        var viewModel = await _mediator.Send(command);
+        if (viewModel == null) { return BadRequest(); }
+
+        return Ok(viewModel);
     }
 }
