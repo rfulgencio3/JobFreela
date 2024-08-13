@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JobFreela.API.Controllers;
 
 [Route("api/[controller]")]
+[ApiController]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
