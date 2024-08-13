@@ -1,8 +1,7 @@
 using AspNetCore.Scalar;
-using JobFreela.Application.Commands.CreateComment;
+using FluentValidation.AspNetCore;
 using JobFreela.Application.Commands.CreateProject;
-using JobFreela.Application.Commands.CreateSkill;
-using JobFreela.Application.Commands.CreateUser;
+using JobFreela.Application.Validators;
 using JobFreela.Core.Repositories;
 using JobFreela.Infra.Persistence;
 using JobFreela.Infra.Persistence.Repositories;
@@ -13,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddFluentValidation(f => f.RegisterValidatorsFromAssemblyContaining<CreateUserCommandValidator>());
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -25,6 +25,16 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
     {
+        if (!ModelState.IsValid) 
+        { 
+            var messages = ModelState
+                .SelectMany(m => m.Value.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
+
+            return BadRequest(messages);
+        }
+
         await _mediator.Send(command);
         return Created();
     }
