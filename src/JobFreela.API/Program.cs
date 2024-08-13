@@ -18,19 +18,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Repositories
-builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<ISkillRepository, SkillRepository>();
-
 builder.Services.AddDbContext<JobFreelaDbContext>(options =>
     options.UseInMemoryDatabase("JobFreelaCs"));
 //options.UseSqlServer(builder.Configuration.GetConnectionString("JobFreelaCs")));
 
+// Repositories
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 // Mediator
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateCommentCommand).Assembly));
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateSkillCommand).Assembly));
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateUserCommand).Assembly));
 
 var app = builder.Build();
 

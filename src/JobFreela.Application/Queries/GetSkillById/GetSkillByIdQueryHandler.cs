@@ -1,19 +1,20 @@
 ﻿using JobFreela.Application.ViewModels;
-using JobFreela.Infra.Persistence;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Queries.GetSkillById;
 
 public class GetSkillByIdQueryHandler : IRequestHandler<GetSkillByIdQuery, SkillViewModel>
 {
-    private readonly JobFreelaDbContext _context;
-    public GetSkillByIdQueryHandler(JobFreelaDbContext context)
+    private readonly ISkillRepository _repository;
+    public GetSkillByIdQueryHandler(ISkillRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task<SkillViewModel> Handle(GetSkillByIdQuery request, CancellationToken cancellationToken)
     {
-        var skill = await _context.Skills.FindAsync(request.Id);
+        var skill = await _repository.GetByIdAsync(request.Id);
+
         return new SkillViewModel(skill.Id, skill.Description, skill.Experience, skill.CreatedAt);
     }
 }

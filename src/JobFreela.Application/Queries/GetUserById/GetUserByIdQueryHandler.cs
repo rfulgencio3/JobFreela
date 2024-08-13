@@ -1,19 +1,21 @@
 ﻿using JobFreela.Application.ViewModels;
-using JobFreela.Infra.Persistence;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Queries.GetUserById;
 
 public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserViewModel>
 {
-    private readonly JobFreelaDbContext _context;
-    public GetUserByIdQueryHandler(JobFreelaDbContext context)
+    private readonly IUserRepository _repository;
+    public GetUserByIdQueryHandler(IUserRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
-    public Task<UserViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<UserViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var user = await _repository.GetByIdAsync(request.Id);
+
+        return new UserViewModel(user.FullName, user.Email, user.BirthDate);
     }
 }

@@ -1,24 +1,23 @@
 ﻿using JobFreela.Application.ViewModels;
-using JobFreela.Infra.Persistence;
+using JobFreela.Core.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace JobFreela.Application.Queries.GetAllProjects;
 
 public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQuery, List<ProjectViewModel>>
 {
-    private readonly JobFreelaDbContext _context;
-    public GetAllProjectsQueryHandler(JobFreelaDbContext context)
+    private readonly IProjectRepository _repository;
+    public GetAllProjectsQueryHandler(IProjectRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task<List<ProjectViewModel>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
     {
-        var projects = _context.Projects;
+        var projects = await _repository.GetAllAsync();
 
-        var projectsViewModel = await projects
+        var projectsViewModel = projects
             .Select(p => new ProjectViewModel(p.Id, p.Title, p.Description, p.CreatedAt))
-            .ToListAsync();
+            .ToList();
 
         return projectsViewModel;
     }

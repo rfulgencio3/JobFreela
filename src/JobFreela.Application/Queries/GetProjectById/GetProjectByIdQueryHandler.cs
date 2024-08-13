@@ -1,19 +1,20 @@
 ﻿using JobFreela.Application.ViewModels;
-using JobFreela.Infra.Persistence;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Queries.GetProjectById;
 
 public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDetailsViewModel>
 {
-    private readonly JobFreelaDbContext _context;
-    public GetProjectByIdQueryHandler(JobFreelaDbContext context)
+    private readonly IProjectRepository _repository;
+    public GetProjectByIdQueryHandler(IProjectRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
     public async Task<ProjectDetailsViewModel> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
-        var project = await _context.Projects.FindAsync(request.Id);
+        var project = await _repository.GetByIdAsync(request.Id);
+
         return new ProjectDetailsViewModel(
             project.Id, 
             project.Title, 
