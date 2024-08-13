@@ -1,13 +1,13 @@
 ﻿using JobFreela.Core.Entities;
-using JobFreela.Infra.Persistence.Repositories;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.CreateUser;
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
 {
-    private readonly UserRepository _repository;
-    public CreateUserCommandHandler(UserRepository repository)
+    private readonly IUserRepository _repository;
+    public CreateUserCommandHandler(IUserRepository repository)
     {
         _repository = repository;   
     }

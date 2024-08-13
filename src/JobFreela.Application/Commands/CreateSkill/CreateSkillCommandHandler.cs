@@ -1,13 +1,13 @@
 ﻿using JobFreela.Core.Entities;
-using JobFreela.Infra.Persistence.Repositories;
+using JobFreela.Core.Repositories;
 using MediatR;
 
 namespace JobFreela.Application.Commands.CreateSkill;
 
 public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand, int>
 {
-    private readonly SkillRepository _repository;
-    public CreateSkillCommandHandler(SkillRepository repository)
+    private readonly ISkillRepository _repository;
+    public CreateSkillCommandHandler(ISkillRepository repository)
     {
         _repository = repository;
     }
