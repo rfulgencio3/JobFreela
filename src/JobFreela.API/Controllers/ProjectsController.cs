@@ -6,14 +6,15 @@ using JobFreela.Application.Commands.StartProject;
 using JobFreela.Application.Commands.UpdateProject;
 using JobFreela.Application.Queries.GetAllProjects;
 using JobFreela.Application.Queries.GetProjectById;
-using JobFreela.Core.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobFreela.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProjectsController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -1,15 +1,15 @@
 ﻿using JobFreela.Application.Commands.CreateUser;
 using JobFreela.Application.Commands.LoginUser;
 using JobFreela.Application.Queries.GetUserById;
-using JobFreela.Application.ViewModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace JobFreela.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -27,6 +27,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
     {
         await _mediator.Send(command);
@@ -34,6 +35,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
     {
         var viewModel = await _mediator.Send(command);

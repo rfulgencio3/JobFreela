@@ -86,7 +86,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Mediator
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

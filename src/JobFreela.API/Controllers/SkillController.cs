@@ -2,12 +2,14 @@
 using JobFreela.Application.Queries.GetAllSkills;
 using JobFreela.Application.Queries.GetSkillById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobFreela.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class SkillController : ControllerBase
 {
     private readonly IMediator _mediator;
