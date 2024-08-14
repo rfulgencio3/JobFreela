@@ -102,9 +102,10 @@ public class ProjectsController : ControllerBase
 
     [HttpPut("{id}/finish")]
     [Authorize(Roles = "client")]
-    public async Task<IActionResult> Finish(int id)
+    [AllowAnonymous] //Remover após testes
+    public async Task<IActionResult> Finish([FromBody] FinishProjectCommand finishProject)
     {
-        var command = new FinishProjectCommand(id);
+        var command = new FinishProjectCommand(finishProject.Id);
         await _mediator.Send(command);
 
         return NoContent();

@@ -51,6 +51,12 @@ public class Project : BaseEntity
         }
     }
 
+    public void SetPaymentPending()
+    {
+        Status = ProjectStatus.PaymentPending;
+        FinishedAt = null;
+    }
+
     public void Update(string title, string description, decimal totalCost)
     {
         Title = title;

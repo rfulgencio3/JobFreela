@@ -6,6 +6,8 @@ using JobFreela.Application.Validators;
 using JobFreela.Core.Repositories;
 using JobFreela.Core.Services;
 using JobFreela.Infra.Auth;
+using JobFreela.Infra.MessageBus;
+using JobFreela.Infra.Payments;
 using JobFreela.Infra.Persistence;
 using JobFreela.Infra.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -83,6 +85,8 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IMessageBusService, MessageBusService>();
 
 // Mediator
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
