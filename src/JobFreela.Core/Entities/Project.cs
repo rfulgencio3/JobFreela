@@ -44,7 +44,7 @@ public class Project : BaseEntity
     }
     public void Finish()
     {
-        if (Status == ProjectStatus.InProgress)
+        if (Status == ProjectStatus.PaymentPending)
         {
             Status = ProjectStatus.Finished;
             FinishedAt = DateTime.UtcNow;

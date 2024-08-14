@@ -2,6 +2,7 @@ using AspNetCore.Scalar;
 using FluentValidation.AspNetCore;
 using JobFreela.API.Filters;
 using JobFreela.Application.Commands.CreateProject;
+using JobFreela.Application.Consumers;
 using JobFreela.Application.Validators;
 using JobFreela.Core.Repositories;
 using JobFreela.Core.Services;
@@ -87,6 +88,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IMessageBusService, MessageBusService>();
+
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 // Mediator
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
