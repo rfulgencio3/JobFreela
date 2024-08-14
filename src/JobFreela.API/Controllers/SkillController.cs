@@ -19,6 +19,7 @@ public class SkillController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> GetAll()
     {
         var skills = await _mediator.Send(new GetAllSkillsQuery());
@@ -29,6 +30,7 @@ public class SkillController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "client, freelancer")]
     public IActionResult GetById(int id)
     {
         var query = new GetSkillByIdQuery(id);
@@ -40,6 +42,7 @@ public class SkillController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> Post([FromBody] CreateSkillCommand command)
     {
         if (command.Description.Length > 50)

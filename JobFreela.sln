@@ -5,13 +5,17 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1AFF81DA-3BAD-4A35-80D0-744B611EE488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.API", "src\JobFreela.API\JobFreela.API.csproj", "{5C12C258-AFFE-47AA-9D23-5A7BFBC9650F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobFreela.API", "src\JobFreela.API\JobFreela.API.csproj", "{5C12C258-AFFE-47AA-9D23-5A7BFBC9650F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.Core", "src\JobFreela.Core\JobFreela.Core.csproj", "{5BD2DA3E-2E42-4048-BD09-3C5B1FE8D676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobFreela.Core", "src\JobFreela.Core\JobFreela.Core.csproj", "{5BD2DA3E-2E42-4048-BD09-3C5B1FE8D676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.Infra", "src\JobFreela.Infra\JobFreela.Infra.csproj", "{89A033B2-FB19-4EB5-BF2E-51E543FCA217}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobFreela.Infra", "src\JobFreela.Infra\JobFreela.Infra.csproj", "{89A033B2-FB19-4EB5-BF2E-51E543FCA217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.Application", "src\JobFreela.Application\JobFreela.Application.csproj", "{F8F88E15-225B-402A-A558-ED2E34B002B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobFreela.Application", "src\JobFreela.Application\JobFreela.Application.csproj", "{F8F88E15-225B-402A-A558-ED2E34B002B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3BB82798-C363-4336-97FD-094468BACCF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobFreela.UnitTests", "test\JobFreela.UnitTests\JobFreela.UnitTests.csproj", "{44257937-E1EB-45C6-8B50-4FCD94C3B185}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8F88E15-225B-402A-A558-ED2E34B002B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44257937-E1EB-45C6-8B50-4FCD94C3B185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44257937-E1EB-45C6-8B50-4FCD94C3B185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44257937-E1EB-45C6-8B50-4FCD94C3B185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44257937-E1EB-45C6-8B50-4FCD94C3B185}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{5BD2DA3E-2E42-4048-BD09-3C5B1FE8D676} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
 		{89A033B2-FB19-4EB5-BF2E-51E543FCA217} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
 		{F8F88E15-225B-402A-A558-ED2E34B002B5} = {1AFF81DA-3BAD-4A35-80D0-744B611EE488}
+		{44257937-E1EB-45C6-8B50-4FCD94C3B185} = {3BB82798-C363-4336-97FD-094468BACCF2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {049028A9-C1E6-4184-BDE8-043663506E07}

@@ -23,6 +23,7 @@ public class ProjectsController : ControllerBase
         _mediator = mediator;
     }
     [HttpGet]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> Get(string query)
     {
         var getAll = new GetAllProjectsQuery(query);
@@ -34,6 +35,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> GetById(int id)
     {
         var query = new GetProjectByIdQuery(id);
@@ -45,6 +47,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
     {
         if (!ModelState.IsValid)
@@ -62,6 +65,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "client")]
     public IActionResult Put(int id, [FromBody] UpdateProjectCommand command)
     {
         _mediator.Send(command);
@@ -69,6 +73,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Delete(int id)
     {
         var command = new DeleteProjectCommand(id);
@@ -78,6 +83,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost("{id}/comments")]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> PostComment([FromBody] CreateCommentCommand command)
     {
         await _mediator.Send(command);
@@ -85,6 +91,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/start")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Start(int id)
     {
         var command = new StartProjectCommand(id);
@@ -94,6 +101,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/finish")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Finish(int id)
     {
         var command = new FinishProjectCommand(id);
