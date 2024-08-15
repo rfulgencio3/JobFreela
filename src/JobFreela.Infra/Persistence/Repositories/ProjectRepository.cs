@@ -12,9 +12,19 @@ public class ProjectRepository : IProjectRepository
         _context = context;
     }
 
-    public async Task<List<Project>> GetAllAsync()
+    public async Task<List<Project>> GetAllAsync(string query)
     {
-        return await _context.Projects.ToListAsync();
+        IQueryable<Project> projects = _context.Projects;
+
+        if (!string.IsNullOrWhiteSpace(query))
+        {
+            projects = projects
+                .Where(p =>
+                    p.Title.Contains(query) ||
+                    p.Description.Contains(query));
+        }
+
+        return await projects.ToListAsync();
     }
 
     public async Task<Project> GetByIdAsync(int id)

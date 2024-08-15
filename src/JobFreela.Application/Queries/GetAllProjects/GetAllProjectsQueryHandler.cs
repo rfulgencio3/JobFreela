@@ -13,7 +13,7 @@ public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQuery, L
     }
     public async Task<List<ProjectViewModel>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
     {
-        var projects = await _repository.GetAllAsync();
+        var projects = await _repository.GetAllAsync(request.Query);
 
         var projectsViewModel = projects
             .Select(p => new ProjectViewModel(p.Id, p.Title, p.Description, p.CreatedAt))
